@@ -157,16 +157,40 @@ public class TaskFrame extends javax.swing.JFrame {
         
         if(optionChosen == 0)//if employee is chosen
         {
-            String newEmployee = (String)JOptionPane.showInputDialog(this,"Enter the name for a new employee(name can't be duplicated.)",
+            //ArrayList tempEmployeeHolder = new ArrayList();
+            String newEmployeeName = (String)JOptionPane.showInputDialog(this,"Enter the name for a new employee(name can't be duplicated.)",
                                                                      "Add a new employee",JOptionPane.QUESTION_MESSAGE, null, null, "");
+            
+            if(!newEmployeeName.isEmpty())
+            {
+                DefaultListModel employeeList = new DefaultListModel();
+                loader.addEmployee(newEmployeeName);
+                
+                for(Employee e : loader.empObjList)
+                {
+                    employeeList.addElement(e.getName());
+                }
+                
+                employeeJList.setModel(employeeList);
+                
+
+                
+                
+                
+            }
             
             
         }
         
         else if(optionChosen == 1)//if project is chosen
         {
-            String newProject = (String)JOptionPane.showInputDialog(this,"Enter the name for a new project(project name can't be duplicated.)",
+            String newProjectName = (String)JOptionPane.showInputDialog(this,"Enter the name for a new project(project name can't be duplicated.)",
                                                                      "Add a new project",JOptionPane.QUESTION_MESSAGE, null, null, "");
+            
+            if(!newProjectName.isEmpty())
+            {
+               
+            }
         }
         
         

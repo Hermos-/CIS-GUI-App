@@ -13,7 +13,6 @@ public class TaskData
     private BufferedReader workOnReader;
     private HashSet employeeNamesArray = new HashSet();
     private ArrayList workOnArray = new ArrayList();
-    
     public ArrayList projectNamesArray = new ArrayList();
     public ArrayList<Employee> empObjList = new ArrayList();
     
@@ -111,41 +110,42 @@ public class TaskData
             }
         }
         
-        if(counter == 0) 
+        if(counter == 0) //if employe does not already exists, do...
         {
             Employee employee = new Employee(name);
             empObjList.add(employee);
-        }
-        
-        
-        
-        
-        try
-        {
-            File file = new File("test.txt");
-            
-            PrintWriter output = new PrintWriter(
-                                 new BufferedWriter(
-                                 new FileWriter(file)));
             
             
-            for(Employee e: empObjList)
+            try
             {
-                output.println(e.getName());
+                File file = new File("employee.txt");
+
+                PrintWriter output = new PrintWriter(
+                                     new BufferedWriter(
+                                     new FileWriter(file)));
+
+
+                for(Employee e: empObjList)
+                {
+                    output.println(e.getName());
+                }
+
+                output.close();
+                System.out.println(name + "has been added to the save file.");
+
             }
-            
-            output.close();
-            System.out.println("written to file test.txt");
-            
-        }
+
+            catch(IOException ioe)
+            {
+                System.out.println(ioe);
+            }
+        }   
         
-        catch(Exception ioe)
-        {
-            System.out.println(ioe);
-        }     
+            
     }
     
-    public void removeEmployee(String name)
+    
+    public void removeEmployee(String name) //won't be used
     {
         for(Employee e: empObjList)
         {
