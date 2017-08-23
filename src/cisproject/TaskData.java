@@ -50,13 +50,21 @@ public class TaskData
 
             while(projectFileLine != null)
             {
-                projectNamesArray.add(projectFileLine);
+                if(!projectFileLine.isEmpty())
+                {
+                    projectNamesArray.add(projectFileLine);
+                }
+                
                 projectFileLine = projectFileReader.readLine();
             }
             
             while(workOnLine != null)
             {
-                workOnArray.add(workOnLine);
+                if(!workOnLine.isEmpty())
+                {
+                    workOnArray.add(workOnLine);
+                }
+                
                 workOnLine = workOnReader.readLine();
             }
 
