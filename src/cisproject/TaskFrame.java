@@ -171,26 +171,31 @@ public class TaskFrame extends javax.swing.JFrame {
                     employeeList.addElement(e.getName());
                 }
                 
-                employeeJList.setModel(employeeList);
-                
-
-                
-                
-                
-            }
-            
-            
+                employeeJList.setModel(employeeList); 
+            }      
         }
         
         else if(optionChosen == 1)//if project is chosen
         {
+            
             String newProjectName = (String)JOptionPane.showInputDialog(this,"Enter the name for a new project(project name can't be duplicated.)",
                                                                      "Add a new project",JOptionPane.QUESTION_MESSAGE, null, null, "");
             
             if(!newProjectName.isEmpty())
             {
-               
+                DefaultListModel projectList = new DefaultListModel();
+                
+                loader.addProject(newProjectName);
+                
+                for(Object s : loader.projectNamesArray)
+                {
+                    projectList.addElement(s);
+                }
+                
+                projectJList.setModel(projectList);
+                
             }
+            
         }
         
         
@@ -210,6 +215,7 @@ public class TaskFrame extends javax.swing.JFrame {
     private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
 
         DefaultListModel reportList = new DefaultListModel(); 
+        String s;
         
         if(employeeJList.isSelectionEmpty() && projectJList.isSelectionEmpty())
         {
@@ -217,7 +223,7 @@ public class TaskFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, errorMessage ,"View Task Report", JOptionPane.ERROR_MESSAGE);
         }
  
-        else if(employeeJList.isSelectionEmpty())//if employee list is not selected but project list is
+        else if(employeeJList.isSelectionEmpty())//if only project list is selected
         {        
             for(String projectSelected : projectJList.getSelectedValuesList())
             {
@@ -230,7 +236,16 @@ public class TaskFrame extends javax.swing.JFrame {
                     }
                 }
                 
-                String s = projectSelected + " project has " + employeeHolder;
+                if(!employeeHolder.isEmpty())
+                {
+                    s = projectSelected + " project has " + employeeHolder;
+                }
+                
+                else
+                {
+                    s = projectSelected + " project currently has no employees assigned.";
+                }
+                
                 reportList.addElement(s);
                 reportList.addElement("\n");
             }
@@ -267,7 +282,16 @@ public class TaskFrame extends javax.swing.JFrame {
                         employeeHolder.add(employee.getName());
                     }
                 }
-                String s =  projectSelected + " project has " + employeeHolder;
+                
+                if(!employeeHolder.isEmpty())
+                {
+                    s =  projectSelected + " project has " + employeeHolder;
+                }
+                
+                else
+                {
+                    s = projectSelected + " project currently has no employees assigned.";
+                }
                 reportList.addElement(s);
                 reportList.addElement("\n");
             }

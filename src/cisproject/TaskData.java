@@ -13,7 +13,7 @@ public class TaskData
     private BufferedReader workOnReader;
     private HashSet employeeNamesArray = new HashSet();
     private ArrayList workOnArray = new ArrayList();
-    public ArrayList projectNamesArray = new ArrayList();
+    public HashSet projectNamesArray = new HashSet();
     public ArrayList<Employee> empObjList = new ArrayList();
     
     
@@ -40,7 +40,11 @@ public class TaskData
 
             while(employeeFileLine != null)
             {
-                employeeNamesArray.add(employeeFileLine);
+                if(!employeeFileLine.isEmpty())
+                {
+                    employeeNamesArray.add(employeeFileLine);
+                }
+
                 employeeFileLine = employeeFileReader.readLine();
             }
 
@@ -58,7 +62,7 @@ public class TaskData
 
             employeeFileReader.close();
             projectFileReader.close();
-            workOnReader.close();                  
+            workOnReader.close();    
         }
         
         catch(IOException ioe)
@@ -93,9 +97,34 @@ public class TaskData
         }
     }
     
-    public void addProject()
+    public void addProject(String projectName)
     {
-        
+        if(!projectNamesArray.contains(projectName))//if project does not already exists, do... NOTE: this is not needed, projectNamesArray is a HashSet
+        {
+            try
+            {
+                projectNamesArray.add(projectName);
+                
+                File file = new File("project.txt");
+
+                PrintWriter output = new PrintWriter(
+                                     new BufferedWriter(
+                                     new FileWriter(file)));
+                
+                
+                for(Object s : projectNamesArray)
+                {
+                    output.println(s);
+                }
+                  
+                output.close();
+            }
+            
+            catch(IOException ioe)
+            {
+                System.out.println(ioe);
+            }
+        }
     }
     
     public void addEmployee(String name)
@@ -104,7 +133,8 @@ public class TaskData
         
         for(Employee e: empObjList)//counts how many times the same name appears in employee list to avoid duplicates
         {
-            if(e.getName().equals(name))
+            String s = e.getName().toString().toLowerCase();
+            if(s.equals(name.toLowerCase()))
             {
                 counter ++;
             }
@@ -131,7 +161,6 @@ public class TaskData
                 }
 
                 output.close();
-                System.out.println(name + "has been added to the save file.");
 
             }
 
