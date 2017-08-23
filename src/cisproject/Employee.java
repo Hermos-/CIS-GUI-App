@@ -47,12 +47,12 @@ public class Employee {
     {
         if(!this.getAssignedProjects().isEmpty())
         {
-        return name + " is currently working on project(s) " + this.getAssignedProjects() + "\n";
+        return name + " is currently working on project(s) " + this.getAssignedProjects();
         }
         
         else
         {
-            return name + " is not currently assigned to a project.\n";
+            return name + " is not currently assigned to a project.";
         }
     
     }

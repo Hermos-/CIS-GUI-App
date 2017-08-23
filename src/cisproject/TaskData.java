@@ -1,17 +1,17 @@
 //Jessie Romero
 package cisproject;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class TaskData 
 {
     private BufferedReader employeeFileReader;
     private BufferedReader projectFileReader;
     private BufferedReader workOnReader;
-    private ArrayList employeeNamesArray = new ArrayList();
+    private HashSet employeeNamesArray = new HashSet();
     private ArrayList workOnArray = new ArrayList();
     
     public ArrayList projectNamesArray = new ArrayList();
@@ -89,8 +89,75 @@ public class TaskData
                     employee.assignProject(projectAssigned);
                 }
             
-            }    
+            }
             empObjList.add(employee);
         }
+    }
+    
+    public void addProject()
+    {
+        
+    }
+    
+    public void addEmployee(String name)
+    {
+        int counter = 0;
+        
+        for(Employee e: empObjList)//counts how many times the same name appears in employee list to avoid duplicates
+        {
+            if(e.getName().equals(name))
+            {
+                counter ++;
+            }
+        }
+        
+        if(counter == 0) 
+        {
+            Employee employee = new Employee(name);
+            empObjList.add(employee);
+        }
+        
+        
+        
+        
+        try
+        {
+            File file = new File("test.txt");
+            
+            PrintWriter output = new PrintWriter(
+                                 new BufferedWriter(
+                                 new FileWriter(file)));
+            
+            
+            for(Employee e: empObjList)
+            {
+                output.println(e.getName());
+            }
+            
+            output.close();
+            System.out.println("written to file test.txt");
+            
+        }
+        
+        catch(Exception ioe)
+        {
+            System.out.println(ioe);
+        }     
+    }
+    
+    public void removeEmployee(String name)
+    {
+        for(Employee e: empObjList)
+        {
+            if(e.getName().equals(name))
+            {
+                
+                empObjList.remove(e);
+                System.out.println(name + " has been removed from employee list!");
+                
+            } 
+        }
+        
+
     }
 }

@@ -49,6 +49,7 @@ public class TaskFrame extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(projectJList);
 
+        reportJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         reportJList.setToolTipText("");
         jScrollPane3.setViewportView(reportJList);
 
@@ -129,10 +130,10 @@ public class TaskFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(assignButton)
                             .addComponent(reportButton)
@@ -147,7 +148,31 @@ public class TaskFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        
+        Object[] options = {"Employee", "Project"};
+        int optionChosen = JOptionPane.showOptionDialog(this, "Add a new employee or project?", 
+                                     "Add Record", JOptionPane.YES_NO_OPTION, 
+                                     JOptionPane.QUESTION_MESSAGE, null, options,
+                                     options[0]);
+        
+        if(optionChosen == 0)//if employee is chosen
+        {
+            String newEmployee = (String)JOptionPane.showInputDialog(this,"Enter the name for a new employee(name can't be duplicated.)",
+                                                                     "Add a new employee",JOptionPane.QUESTION_MESSAGE, null, null, "");
+            
+            
+        }
+        
+        else if(optionChosen == 1)//if project is chosen
+        {
+            String newProject = (String)JOptionPane.showInputDialog(this,"Enter the name for a new project(project name can't be duplicated.)",
+                                                                     "Add a new project",JOptionPane.QUESTION_MESSAGE, null, null, "");
+        }
+        
+        
+        
+        
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void assignButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignButtonActionPerformed
@@ -204,8 +229,9 @@ public class TaskFrame extends javax.swing.JFrame {
                  }   
                 }
             }
-            String divider = "\n" + "=========" + "\n";
+            String divider = "=========";
             reportList.addElement(divider);
+            reportList.addElement("\n");
             
             for(String projectSelected: projectJList.getSelectedValuesList())
             {
@@ -237,12 +263,8 @@ public class TaskFrame extends javax.swing.JFrame {
                  }   
                 }
             }
-            reportJList.setModel(reportList);
-            
-            
+            reportJList.setModel(reportList);   
         }
-
-
     }//GEN-LAST:event_reportButtonActionPerformed
 
     public void loadToGui() 
@@ -259,7 +281,6 @@ public class TaskFrame extends javax.swing.JFrame {
         
         employeeJList.setModel(employeeList);
         projectJList.setModel(projectList);
-
     }
 
     
@@ -311,8 +332,6 @@ public class TaskFrame extends javax.swing.JFrame {
     TaskData loader = new TaskData();
     
     
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton assignButton;
