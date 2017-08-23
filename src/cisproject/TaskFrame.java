@@ -2,7 +2,7 @@
 package cisproject;
 
 import javax.swing.DefaultListModel;
-//import java.util.*;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -98,46 +98,48 @@ public class TaskFrame extends javax.swing.JFrame {
                         .addComponent(reportButton))
                     .addComponent(employeeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(projectLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(projectLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addGap(24, 24, 24)
                         .addComponent(reportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(employeeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(projectLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(reportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(assignButton)
                             .addComponent(reportButton)
                             .addComponent(exitButton)
-                            .addComponent(addButton)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(addButton))
+                        .addGap(31, 31, 31))
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
 
@@ -158,7 +160,7 @@ public class TaskFrame extends javax.swing.JFrame {
 
     private void reportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportButtonActionPerformed
 
-        DefaultListModel reporList = new DefaultListModel(); 
+        DefaultListModel reportList = new DefaultListModel(); 
         
         if(employeeJList.isSelectionEmpty() && projectJList.isSelectionEmpty())
         {
@@ -167,30 +169,75 @@ public class TaskFrame extends javax.swing.JFrame {
         }
  
         else if(employeeJList.isSelectionEmpty())//if employee list is not selected but project list is
-        {
-            System.out.println("only project list is selected!");
+        {        
+            for(String projectSelected : projectJList.getSelectedValuesList())
+            {
+                ArrayList employeeHolder = new ArrayList();
+                for(Employee employee : loader.empObjList)
+                {
+                    if(employee.getAssignedProjects().contains(projectSelected))
+                    {
+                        employeeHolder.add(employee.getName());
+                    }
+                }
+                
+                String s = projectSelected + " project has " + employeeHolder;
+                reportList.addElement(s);
+                reportList.addElement("\n");
+            }
+            
+            reportJList.setModel(reportList);
+            
         }
         
         
         else if(!employeeJList.isSelectionEmpty() && !projectJList.isSelectionEmpty())//if both are selected
         {
-            System.out.println("Both are selected!");
-        }
-        
-        else
-        {
-            System.out.println("only employee list is selected!");
             for(String employeeSelected: employeeJList.getSelectedValuesList())
             {
                 for(Employee employee: loader.empObjList)
                 {
                  if(employeeSelected.equals(employee.getName()))
                  {
-                     reporList.addElement(employee.getProjectReport());
+                     reportList.addElement(employee.getProjectReport());
+                     reportList.addElement("\n");
                  }   
                 }
-             reportJList.setModel(reporList);
             }
+            String divider = "\n" + "=========" + "\n";
+            reportList.addElement(divider);
+            
+            for(String projectSelected: projectJList.getSelectedValuesList())
+            {
+                ArrayList employeeHolder = new ArrayList();
+                for(Employee employee : loader.empObjList)
+                {
+                    if(employee.getAssignedProjects().contains(projectSelected))
+                    {
+                        employeeHolder.add(employee.getName());
+                    }
+                }
+                String s =  projectSelected + " project has " + employeeHolder;
+                reportList.addElement(s);
+                reportList.addElement("\n");
+            }
+            reportJList.setModel(reportList);
+        } 
+        
+        else //if only employee list is selected
+        {
+            for(String employeeSelected: employeeJList.getSelectedValuesList())
+            {
+                for(Employee employee: loader.empObjList)
+                {
+                 if(employeeSelected.equals(employee.getName()))
+                 {
+                     reportList.addElement(employee.getProjectReport());
+                     reportList.addElement("\n");
+                 }   
+                }
+            }
+            reportJList.setModel(reportList);
             
             
         }
