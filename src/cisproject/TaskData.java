@@ -12,7 +12,7 @@ public class TaskData
     private BufferedReader projectFileReader;
     private BufferedReader workOnReader;
     private HashSet employeeNamesArray = new HashSet();
-    private ArrayList workOnArray = new ArrayList();
+    public ArrayList workOnArray = new ArrayList();
     public HashSet projectNamesArray = new HashSet();
     public ArrayList<Employee> empObjList = new ArrayList();
     
@@ -107,7 +107,7 @@ public class TaskData
     
     public void addProject(String projectName)
     {
-        if(!projectNamesArray.contains(projectName))//if project does not already exists, do... NOTE: this is not needed, projectNamesArray is a HashSet
+        if(!projectNamesArray.contains(projectName))
         {
             try
             {
@@ -181,20 +181,35 @@ public class TaskData
             
     }
     
-    
-    public void removeEmployee(String name) //won't be used
+    public void updateWorkOnFile(Employee e, String project)
     {
-        for(Employee e: empObjList)
-        {
-            if(e.getName().equals(name))
-            {
-                
-                empObjList.remove(e);
-                System.out.println(name + " has been removed from employee list!");
-                
-            } 
-        }
+        String employeeProject = e.getName() + "<>" + project;
         
+        if(!workOnArray.contains(employeeProject))
+        {
+            workOnArray.add(employeeProject);
+
+            try
+            {
+                File file = new File("workon.txt");
+
+                PrintWriter output = new PrintWriter(
+                                     new BufferedWriter(
+                                     new FileWriter(file)));
+
+                for(Object s: workOnArray)
+                {
+                    output.println(s);
+                }
+
+                output.close();
+            }
+
+            catch(IOException ioe)
+            {
+                System.out.println(ioe);
+            }
+        }
 
     }
 }

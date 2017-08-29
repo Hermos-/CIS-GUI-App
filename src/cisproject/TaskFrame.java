@@ -114,7 +114,7 @@ public class TaskFrame extends javax.swing.JFrame {
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                     .addComponent(reportLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -208,6 +208,26 @@ public class TaskFrame extends javax.swing.JFrame {
 
     private void assignButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignButtonActionPerformed
         // TODO add your handling code here:
+        
+        if(!employeeJList.isSelectionEmpty() && !projectJList.isSelectionEmpty())
+        {
+            
+            for(String employeeSelected : employeeJList.getSelectedValuesList())
+            {
+                for(Employee employee : loader.empObjList)
+                {
+                    if(employee.getName().equals(employeeSelected))
+                    {
+                        for(String projectSelected : projectJList.getSelectedValuesList())
+                        {
+                            employee.assignProject(projectSelected);
+                            loader.updateWorkOnFile(employee, projectSelected);
+                        }
+                    }
+                }
+            }
+        }
+        
     }//GEN-LAST:event_assignButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -224,6 +244,10 @@ public class TaskFrame extends javax.swing.JFrame {
             String errorMessage = "you must select either employee(s) or project(s)";
             JOptionPane.showMessageDialog(this, errorMessage ,"View Task Report", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
+        
+        
  
         else if(employeeJList.isSelectionEmpty())//if only project list is selected
         {        
@@ -255,6 +279,10 @@ public class TaskFrame extends javax.swing.JFrame {
             reportJList.setModel(reportList);
             
         }
+        
+        
+        
+        
         
         
         else if(!employeeJList.isSelectionEmpty() && !projectJList.isSelectionEmpty())//if both are selected
